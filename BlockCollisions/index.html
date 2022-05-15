@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet' href='../globals/index.css' />
+    <title>Game</title>
+    <script type="text/javascript" src="js/GameWorld.js"></script>
+    <script type="text/javascript" src="js/GameObject.js"></script>
+    <script type="text/javascript" src="js/Square.js"></script>
+    <script src="https://fred-wang.github.io/mathjax.js/mpadded-min.js"></script> <!-- Mathml for math formuals -->
+
+</head>
+
+<body>
+    <script>
+        // Listen to the onLoad event, then create a game world
+        var gameWorld;
+        window.onload = function () {
+          document.getElementById('gravityCheckBox').click();
+          gameWorld = new GameWorld('canvas', { barrier: true, g: 20, angularBoolean:true });
+          var gravityCheckBox = document.getElementById('gravityCheckBox');
+          var countr1 = 1;
+          gravityCheckBox.addEventListener('click', () => {
+          countr1++;
+          gameWorld = new GameWorld('canvas', {barrier: true, g: countr1 % 2 ? 9.8 : 0, angularBoolean: true})
+          }) 
+         
+        }
+       
+    </script>
+    <canvas id="canvas" width="750" height="400" style="border:1px solid lightgrey;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <br/>
+    <input type='checkbox' name='gravity' id='gravityCheckBox'/>
+    <label for='gravity'>Gravity</label>
+ 
+
+    <h3 class='sectionTitle'>
+        Physics - Collisions
+    </h3>
+    <p>
+        The basics of collisions are as follows:
+        <ul>
+            <li>
+                Inelastic collisions
+            </li>
+            <p>
+                An inelastic collision is defined as being a collision where the two objects stick together.
+                This is because the some of kinetic energy of the particles is dissipated to the surrounding.
+                However, even though the kinetic energy is not conserved, the momentum is by the conservation of
+                momentum. This states the total momentum before and after any collision must be the same. The formula
+                for momentum is:
+                <br />
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+                    <mrow>
+                        <msup>
+                            <mi>p</mi>
+                        </msup>
+                        <mo> = </mo>
+                        <msup>
+                            <mi>m</mi>
+                        </msup>
+                        <!-- <mo>*</mo> -->
+
+                        <msup>
+                            <mi>v</mi>
+                            <mn>2</mn>
+                        </msup>
+
+
+
+                    </mrow>
+
+                </math>
+           <p>Meaning:</p> 
+           <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mstyle displaystyle="true">
+              <mrow class="MJX-TeXAtom-ORD">
+                <msub>
+                  <mi>p</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mi>i</mi>
+                  </mrow>
+                </msub>
+                <mo>=</mo>
+                <msub>
+                  <mi>p</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mi>f</mi>
+                  </mrow>
+                </msub>
+              </mrow>
+            </mstyle>
+          </math>
+                <br/>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mstyle displaystyle="true">
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <msub>
+                          <mtext>m</mtext>
+                          <mrow class="MJX-TeXAtom-ORD">
+                            <mi>t</mi>
+                          </mrow>
+                        </msub>
+                        <mrow>
+                          <mo>(</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>i</mi>
+                              <mn>1</mn>
+                            </mrow>
+                          </msub>
+                          <mo>+</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>i</mi>
+                              <mn>2</mn>
+                            </mrow>
+                          </msub>
+                          <mo>)</mo>
+                        </mrow>
+                        <mo>=</mo>
+                        <msub>
+                          <mi>m</mi>
+                          <mrow class="MJX-TeXAtom-ORD">
+                            <mi>t</mi>
+                          </mrow>
+                        </msub>
+                        <mrow>
+                          <mo>(</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>f</mi>
+                              <mn>1</mn>
+                            </mrow>
+                          </msub>
+                          <mo>+</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>f</mi>
+                              <mn>2</mn>
+                            </mrow>
+                          </msub>
+                          <mo>)</mo>
+                        </mrow>
+                      </mrow>
+                    </mstyle>
+                  </math>
+            </p>
+            <li>Elastic collisions</li>
+            <p>Elastic collisions are similar to inelastic collisions, in the sense momentum is conserved, but in elastic collisions the kinetic energy is conserved. Now, given that kinetic energy is: </p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mstyle displaystyle="true">
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mi>K</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                    <mi>m</mi>
+                    <msup>
+                      <mi>v</mi>
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <mn>2</mn>
+                      </mrow>
+                    </msup>
+                  </mrow>
+                </mstyle>
+              </math> 
+              <br/>
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mstyle displaystyle="true">
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <msub>
+                      <mi>K</mi>
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <mi>i</mi>
+                      </mrow>
+                    </msub>
+                    <mo>=</mo>
+                    <msub>
+                      <mi>K</mi>
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <mi>f</mi>
+                      </mrow>
+                    </msub>
+                  </mrow>
+                </mstyle> 
+                </math> 
+                <br/>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mstyle displaystyle="true">
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <mfrac>
+                          <mn>1</mn>
+                          <mn>2</mn>
+                        </mfrac>
+                        <msub>
+                          <mi>m</mi>
+                          <mrow class="MJX-TeXAtom-ORD">
+                            <mi>t</mi>
+                          </mrow>
+                        </msub>
+                        <mrow>
+                          <mo>(</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>i</mi>
+                              <mn>1</mn>
+                            </mrow>
+                          </msub>
+                          <mo>+</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>i</mi>
+                              <mn>2</mn>
+                            </mrow>
+                          </msub>
+                          <mo>)</mo>
+                        </mrow>
+                        <mo>=</mo>
+                        <mfrac>
+                          <mn>1</mn>
+                          <mn>2</mn>
+                        </mfrac>
+                        <msub>
+                          <mi>m</mi>
+                          <mrow class="MJX-TeXAtom-ORD">
+                            <mi>t</mi>
+                          </mrow>
+                        </msub>
+                        <mrow>
+                          <mo>(</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>f</mi>
+                              <mn>1</mn>
+                            </mrow>
+                          </msub>
+                          <mo>+</mo>
+                          <msub>
+                            <mi>v</mi>
+                            <mrow class="MJX-TeXAtom-ORD">
+                              <mi>f</mi>
+                              <mn>2</mn>
+                            </mrow>
+                          </msub>
+                          <mo>)</mo>
+                        </mrow>
+                      </mrow>
+                    </mstyle>
+                  </math>
+                  <p>Now doing using simultanoes equations we could use this to solve elastic collision problems.</p>  
+        </ul> 
+        
+    </p>
+    <h3 class='sectionTitle'>
+          How I implemented it
+        </h3>
+
+        <p>Unfortunately, the physics I have just shown you is hard to apply in a game because we have to determine if 
+            the collision is elastic or inelastic. I did this by restitution whereby we dissipate energy to show bounciness and measuring the normal using geometry.
+             
+        </p>
+
+
+</body>
+
+</html>

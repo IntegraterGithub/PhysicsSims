@@ -1,0 +1,12 @@
+body {
+    font-family: "Open Sans",sans-serif;
+    letter-spacing: .02em;
+    line-height: 1.4;
+    color: #222;
+    font-size: 1.6rem;
+}
+.sectionTitle {
+    border-top: 1px solid lightskyblue;
+    padding-top: 2%;
+    color: lightskyblue;
+}
