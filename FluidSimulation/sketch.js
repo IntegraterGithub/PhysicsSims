@@ -23,7 +23,11 @@ window.onload = () => {
   rerender.addEventListener('click', () => {
     fluid = new Fluid(0.2, 0, 0.0000000001);
   })
-  
+  var tiles = document.getElementById('tiles');
+  tiles.addEventListener('change', () => {
+    N = tiles.value;
+    fluid = new Fluid(0.2, 0, 0.0000000001)
+  })
 }
 
 
