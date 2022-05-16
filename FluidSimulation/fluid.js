@@ -1,4 +1,4 @@
-let N = 150;
+let N = 200;
 let iter = 16;
 let SCALE = 5;
 let t = 0;
@@ -10,6 +10,7 @@ function IX(x, y) {
 // Fluid cube class
 class Fluid {
   constructor(dt, diffusion, viscosity) {
+    this.hsb = false;
     this.size = N;
     this.dt = dt;
     this.diff = diffusion; // the rate of diffusion 
@@ -73,10 +74,16 @@ class Fluid {
         let x = i * SCALE;
         let y = j * SCALE;
         let d = this.density[IX(i, j)];
-        // fill(this.color[0] * d, this.color[1] * d, this.color[2] * d);
+        if(this.hsb){
+          colorMode(HSB, 255);
+          fill(d, 255, 255)
+          noStroke();
+          rect(x, y, SCALE, SCALE)
+        } else {
         fill(d);
         noStroke();
-        rect(x, y, SCALE, SCALE);
+        rect(x, y, SCALE, SCALE)
+        }
       }
     }
   }
